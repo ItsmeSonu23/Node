@@ -1,6 +1,6 @@
-const path = require("path")
-const os = require("os")
-const fs = require("fs")
+// const path = require("path")
+// const os = require("os")
+// const fs = require("fs")
 
 // console.log(__filename)
 // console.log(__dirname);
@@ -47,5 +47,135 @@ const fs = require("fs")
 // const read = fs.readFileSync("file.txt","utf-8")
 // console.log(read);
 
-const deleteFile = fs.unlinkSync("file.txt")
-console.log(deleteFile);
+// const deleteFile = fs.unlinkSync("file.txt")
+// console.log(deleteFile);
+
+// 1callback 
+// 2.promises
+// 3. async/await
+
+
+// const fs = require("fs/promises")
+// const path = require("path")
+
+// const filename = "CallFile.txt"
+// const filepath = path.join(__dirname, filename)
+
+// create file by callback file module
+
+// fs.writeFile(filepath,"Hello this is call back related file module","utf-8",(err)=>{
+//     if(err){
+//         console.log(err);
+
+//     }else{
+//         console.log("file created successfully");
+//     }
+// })
+
+
+// Read file
+
+// fs.readFile(filepath,"utf-8",(err,data)=>{
+//     if(err){
+//         console.log(err);
+//     }else{
+//         console.log(data);
+//     }
+// })
+
+
+// Update file
+// fs.appendFile(filepath,"\nHello this is append file","utf-8",(err)=>{
+//     if(err){
+//         console.log(err);
+//     }else{
+//         console.log("file updated successfully");
+//     }
+// })
+
+// Deleted file
+// fs.unlink(filepath,(err)=>{
+//     if(err){
+//         console.log(err);
+//     }else{
+//         console.log("file deleted successfully");
+//     }
+// })
+
+
+//File system Promises 
+
+// fs.promises.writeFile(filepath,"Hello this is my promises file","utf-8").then(()=>{
+//     console.log("file created successfully");
+// }).catch((err)=>{
+//     console.log(err);
+// })
+
+// fs.promises.readFile(filepath,"utf-8").then((data)=>{
+//     console.log(data);
+// }).catch((err)=>{
+//     console.log(err);
+// })
+
+
+// Update file by promises
+
+// fs.promises.appendFile(filepath,"\nHello this is promises append file","utf-8").then(()=>{
+//     console.log("file updated successfully");
+// }).catch((err)=>{
+//     console.log(err);
+// })
+
+// delete file 
+// fs.promises.unlink(filepath).then(()=>{
+//     console.log("file deleted successfully");
+// }).catch((err)=>{
+//     console.log(err);
+// })
+
+//File system Async/Await
+
+// async function writeFile() {
+//     try {
+//         await fs.writeFile(filepath, "Hello this is my async/await file", "utf-8")
+//         console.log("file created successfully");
+//     } catch (error) {
+//         console.log(error);
+//     }
+
+// }
+
+// writeFile()
+
+
+// async function renameFile(){
+//     try {
+//         await fs.rename(filepath,"CallFileAsync.txt")
+//         console.log("file renamed successfully");
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
+
+// renameFile()
+
+
+// creating server
+
+const http = require("http")
+
+const server = http.createServer((req,res)=>{
+    if(req.url ==="/"){
+        res.write("<h1>Welcome to Home Page</h1>")
+        res.end()
+    }else if(req.url==="/about"){
+        res.write("<h1>Welcome to About Page</h1>")
+        res.end()
+    }
+})
+
+const PORT = 3000
+server.listen(PORT,()=>{
+    console.log(`Server is running on port ${PORT}`);
+})
