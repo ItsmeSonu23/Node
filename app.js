@@ -163,19 +163,61 @@
 
 // creating server
 
-const http = require("http")
+// const http = require("http")
+// import http from "http"
 
-const server = http.createServer((req,res)=>{
-    if(req.url ==="/"){
-        res.write("<h1>Welcome to Home Page</h1>")
-        res.end()
-    }else if(req.url==="/about"){
-        res.write("<h1>Welcome to About Page</h1>")
-        res.end()
+// const server = http.createServer((req,res)=>{
+//     if(req.url ==="/"){
+//         res.write("<h1>Welcome to Home Page</h1>")
+//         res.end()
+//     }else if(req.url==="/about"){
+//         res.write("<h1>Welcome to About Page</h1>")
+//         res.end()
+//     }
+// })
+
+// const PORT = 3000
+// server.listen(PORT,()=>{
+//     console.log(`Server is running on port ${PORT}`);
+// })
+
+
+import readline from "readline"
+
+const rl = readline.createInterface({
+    input:process.stdin,
+    output:process.stdout
+})
+
+const todo = []
+
+const showmenu = ()=>{
+    console.log("1.Add Task");
+    console.log("2.Show Task");
+    console.log("3.Exit");
+    rl.question("Enter your choice: ",handleInput)
+}
+
+const handleInput = (option)=>{
+    if(option=="1"){
+        rl.question("Enter your task : ",(task)=>{
+            todo.push(task);
+            console.log("Task added successfully");
+            showmenu();
+        })
+    }else if(option=="2"){
+        console.log("Todo Task List : ");
+        todo.forEach((task,index)=>{
+            console.log(`${index+1}. ${task}`);
+        })
+        showmenu();
+    }else if(option=="3"){
+        console.log("Bye Bye");
+        rl.close();
+    }else{
+        console.log("Invalid option");
+        showmenu();
     }
-})
+}
 
-const PORT = 3000
-server.listen(PORT,()=>{
-    console.log(`Server is running on port ${PORT}`);
-})
+handleInput()
