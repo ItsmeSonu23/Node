@@ -4,7 +4,8 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch app.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "description": "",
   "dependencies": {
     "chalk": "^5.6.2",
+    "dotenv": "^17.2.2",
     "express": "^5.1.0"
   }
 }
