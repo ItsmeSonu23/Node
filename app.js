@@ -235,6 +235,8 @@
 
 import express from 'express'
 import dotenv from 'dotenv'
+import * as path from "path";
+import router from "./router.js";
 
 dotenv.config()
 
@@ -262,11 +264,13 @@ app.use(express.urlencoded({extended:true}))
 //     console.log(data);
 //     res.send("<h1>About Page</h1>")
 // })
+app.set("view engine", "ejs")
+app.set("views",path.join(import.meta.dirname,'views'))
+app.use("/",router);
 
-app.post("/login",(req,res)=>{
-    const {username,password} = req.body;
-    console.log(username,password);
-    res.send(`<h1>Login Page ${username} : ${password}</h1>`)
+app.use((req,res)=>{
+    // return res.status(404).send("Page Not Found")
+    return res.status(404).sendFile(path.join(import.meta.dirname,"public","404.html"))
 })
 
 
