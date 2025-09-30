@@ -1,18 +1,46 @@
 
 import express from "express";
+import {faker} from "@faker-js/faker"
+import mysql from 'mysql2';
 
 const router = express.Router();
 
+const user = {
+    id : faker.string.uuid(),
+    name:faker.person.firstName(),
+    email:faker.internet.email(),
+    password:faker.internet.password(),
+}
 
-router.post("/login",(req,res)=>{
-    const {username,password} = req.body;
-    console.log(username,password);
-    res.send(`<h1>Login Page ${username} : ${password}</h1>`)
+console.log(user);
+
+const con = mysql.createConnection({
+    host:"localhost",
+    user:"root",
+    password:"admin",
+    database:"node"
 })
 
-router.get("/name",(req,res)=>{
-    const name = "Nikhil";
-    res.render('Data',{name});
+
+let quer = "insert into users (id,username,email,password) values (?,?,?,?)"
+let data = [user.id,user.name,user.email,user.password]
+
+con.query(quer,data,(err,result)=>{
+    console.log(result);
+    
 })
+
+
+
+router.get("/users",(req,res)=>{
+    let getData = "Select id,username,email,password from users";
+    con.query(getData,(err,result)=>{
+        console.log(result);     
+        res.send(result)
+    })
+    con.end()
+})
+
+
 
 export default router;
