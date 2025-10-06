@@ -1,18 +1,18 @@
-
 import express from "express";
 import {faker} from "@faker-js/faker"
 import mysql from 'mysql2';
-
+import path from "path";
+import { randomUUID } from "crypto";
 const router = express.Router();
 
-const user = {
-    id : faker.string.uuid(),
-    name:faker.person.firstName(),
-    email:faker.internet.email(),
-    password:faker.internet.password(),
-}
+// const user = {
+//     id : faker.string.uuid(),
+//     name:faker.person.firstName(),
+//     email:faker.internet.email(),
+//     password:faker.internet.password(),
+// }
 
-console.log(user);
+// console.log(user);
 
 const con = mysql.createConnection({
     host:"localhost",
@@ -22,25 +22,47 @@ const con = mysql.createConnection({
 })
 
 
-let quer = "insert into users (id,username,email,password) values (?,?,?,?)"
-let data = [user.id,user.name,user.email,user.password]
+// let quer = "insert into users (id,username,email,password) values (?,?,?,?)"
+// let data = [user.id,user.name,user.email,user.password]
 
-con.query(quer,data,(err,result)=>{
-    console.log(result);
+// con.query(quer,data,(err,result)=>{
+//     console.log(result);
     
-})
+// })
 
 
 
 router.get("/users",(req,res)=>{
     let getData = "Select id,username,email,password from users";
     con.query(getData,(err,result)=>{
-        console.log(result);     
+        // console.log(result);     
         res.send(result)
+        // res.render("Data.ejs",{data:result})
     })
-    con.end()
+})
+
+router.post("/user",(req,res)=>{
+    const id = randomUUID()
+    const data = req.body
+    console.log(data, id);
+
+    let quer = "insert into users (id,username,email,password) values (?,?,?,?)"
+    let d = [id,data.username,data.email,data.password]
+    con.query(quer,d,(err,result)=>{
+        console.log(result);    
+        
+    })
 })
 
 
+router.delete("/user/:id",(req,res)=>{
+    const {id} = req.params
+    let quer = "delete from users where id = ?"
+    let d = [id]
+    con.query(quer,d,(err,result)=>{
+        console.log(result);    
+        res.send("User deleted successfully")
+    })
+})
 
 export default router;

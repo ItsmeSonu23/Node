@@ -237,10 +237,11 @@ import express from 'express'
 import dotenv from 'dotenv'
 import * as path from "path";
 import router from "./router.js";
-
+import cors from 'cors'
 dotenv.config()
 
 const app = express()
+app.use(cors())
 app.use(express.static("public"))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
